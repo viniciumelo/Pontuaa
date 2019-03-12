@@ -1,0 +1,39 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Do not change this line. 
+RewriteEngine on 
+
+# Change example.com to your domain name
+RewriteCond %{HTTP_HOST} ^(www.)?example.com$ 
+
+# Change your_app_name to the subfolder name
+RewriteCond %{REQUEST_URI} !^/vcompreeganhe.com.br/ 
+
+# Don't change the following two lines. 
+RewriteCond %{REQUEST_FILENAME} !-f 
+RewriteCond %{REQUEST_FILENAME} !-d 
+
+# Change your_app_name to the subfolder name
+# Change example.com to your domain name
+RewriteRule ^(.*)$ /vcompreeganhe.com.br/$1 
+RewriteCond %{HTTP_HOST} ^(www.)?example.com$ 
+RewriteRule ^(/)?$ vcompreeganhe.com.br/index.php [L]
+</IfModule>
