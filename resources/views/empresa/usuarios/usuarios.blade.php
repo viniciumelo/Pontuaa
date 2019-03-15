@@ -1,3 +1,7 @@
+@php
+    #$teste =new DateTime($usuarios[0]->created_at);
+    #dd($teste->format('d/m/Y'));
+@endphp
 @extends('layouts.app')
 
 @if(isset($niver))
@@ -22,7 +26,7 @@
         <button class="c-close" data-dismiss="alert" type="button">×</button>
     </div>    
     @endif
-
+    <a href="../empresa/pontos">Configurar Pontos</a>
     <div class="row u-mb-large">
         <div class="col-12">
             <table class="c-table" id="datatable">
@@ -53,19 +57,15 @@
 
                 <thead class="c-table__head c-table__head--slim">
                     <tr class="c-table__row">                        
-                        <th class="c-table__cell c-table__cell--head sort">Ranking</th>
-                        <th class="c-table__cell c-table__cell--head">Nome</th>
-                        <th class="c-table__cell c-table__cell--head sort">Presenças</th>
-                        <th class="c-table__cell c-table__cell--head sort">Cliente desde</th>
-                        <th class="c-table__cell c-table__cell--head sort">Última visita</th>
-                        
-                        
-                        
-                        
-                        <th class="c-table__cell c-table__cell--head sort">Pontos</th>
-                        <th class="c-table__cell c-table__cell--head sort">Saldo atual</th>
-                        <th class="c-table__cell c-table__cell--head sort">Prêmios </th>
-                        <th class="c-table__cell c-table__cell--head no-sort">Ativo</th>
+                        <th class="c-table__cell c-table__cell--head sort" style="width: 9%;">Ranking</th>
+                        <th class="c-table__cell c-table__cell--head"style="width: 7%;">Nome</th>
+                        <th class="c-table__cell c-table__cell--head sort">Presenças&nbsp;&nbsp;</th>
+                        <th class="c-table__cell c-table__cell--head sort"style="width: 3%;">Cliente desde</th>
+                        <th class="c-table__cell c-table__cell--head sort"style="width: 3%;">Última visita</th>
+                        <th class="c-table__cell c-table__cell--head sort">Pontos&nbsp;&nbsp;</th>
+                        <th class="c-table__cell c-table__cell--head sort">Saldo atual&nbsp;&nbsp;</th>
+                        <th class="c-table__cell c-table__cell--head sort">Prêmios&nbsp;&nbsp;</th>
+                        <th class="c-table__cell c-table__cell--head no-sort"style="width: 4%;">Ativo</th>
                         
                         @if(!isset($niver))
                         <th class="c-table__cell c-table__cell--head no-sort">Opções</th>
@@ -84,13 +84,13 @@
                     @endif
 
                     @foreach($usuarios as $u)
-                    <tr class="c-table__row">                        
+                    <tr class="c-table__row ">                        
                         <td class="c-table__cell">{{ $u->nota }}</td>
                         <td class="c-table__cell">{{ $u->name }}</td>
                         <td class="c-table__cell">{{ $u->saldo }}</td>
-                        <td class="c-table__cell">{{ $u->created_at }}</td>
+                        <td class="c-table__cell text-truncate">{{ $u->created_at }}</td>
                         
-                        <td class="c-table__cell">{{ $u->updated_at }}</td>
+                        <td class="c-table__cell text-truncate">{{ $u->updated_at }}</td>
                         <td class="c-table__cell">{{ $u->saldo }}</td>
                         <td class="c-table__cell">{{ $u->saldo }}</td>
                         <td class="c-table__cell">{{ $u->saldo }}</td>
@@ -125,7 +125,6 @@
 
                                   <a class="c-dropdown__item dropdown-item" id="btn-estorno-{{ $u->id }}" data-nome="{{ $u->name }}" 
                                     onclick="estornar('{{ $u->id }}')" href="#">Estornar Pontos</a>
-
                                     <a data-nome="{{ $u->name }}" id="btn-resgate-{{ $u->id }}" class="c-dropdown__item dropdown-item" onclick="resgatar('{{ $u->id }}')" href="#">Resgatar Prêmio</a>
                               </div>
                           </div>
