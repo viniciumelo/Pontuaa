@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\EmpresaUsuario;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -44,6 +46,12 @@ class User extends Authenticatable
         'contato.required' => 'O campo telefone precisa ser informado. Por favor, você pode verificar isso?',
         'contato.unique' => 'O campo telefone já está em uso por outro usuário. Por favor, você pode verificar isso?'
     );
+
+    public function consumidores(){
+        // muito louco isso aqui
+        // a chave estrangeira da tabela empresas_usuarios é user_id entao pra encontrar quantos consumidores são temos buscar por empresa_id
+        return $this->hasMany('App\EmpresaUsuario','empresa_id');
+    }
 
     protected $table = 'users';
 }

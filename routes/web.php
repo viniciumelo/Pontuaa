@@ -180,6 +180,10 @@ Route::prefix('empresa')->group(function(){
     Route::post('pedido/editar/{id}', 'PedidoController@update');
     Route::get('pedido/detalhes/{id}', 'PedidoController@detalhes');
 
+    // pontos
+    Route::get('pontos', 'EmpresaFidelidadeController@configurarPontos');
+    Route::post('pontos', 'EmpresaFidelidadeController@storeConfiguracaoPontos')->name("conf.pontos");
+
     Route::post('pontuar', 'EmpresaFidelidadeController@pontuar');
     Route::post('estornar', 'EmpresaFidelidadeController@estornar');
 });

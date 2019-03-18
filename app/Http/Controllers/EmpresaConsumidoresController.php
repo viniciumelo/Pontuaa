@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
+use DateTime;
 use Redirect;
 use Auth;
 use App\EmpresaUsuario;
@@ -21,15 +23,15 @@ use App\Premio;
 class EmpresaConsumidoresController extends Controller
 {
     public function index(){
-    	$usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+      $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+      
       $lista = User::whereIn('id', $usuarios_ids)->where('tipo',1)->paginate(10);
-
+      
       foreach ($lista as $u) {
-        $u->saldo = Pontos::where('user_id', $u->id)->where('loja_id', Auth::user()->id)->sum('pontos');
+        $u->saldo = Pontos::where('user_id', $u->id)->where('loja_id', Auth::user()->id)->sum('pontos.pontos');
       }
 
       $premios = Premio::orderBy('nome')->get();
-
       //$lista = EmpresaUsuario::where('empresa_id', Auth::user()->id)->with('usuario')->paginate(10);
       return view('empresa.usuarios.usuarios')->with('usuarios', $lista)->with('premios', $premios);
     }

@@ -8,8 +8,6 @@ class EmpresaUsuario extends Model
 {
     protected $table = 'empresas_usuarios';
 
-    public function usuario()
-    {
-        return $this->hasOne('App\User','id','user_id');
-    }
+    protected $fillable = ['empresa_id','user_id','created_id'];
+
 }

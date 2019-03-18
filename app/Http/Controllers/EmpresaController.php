@@ -12,6 +12,8 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Response;
 
 use App\User;
+use App\Pontos;
+use App\EmpresaUsuario;
 use DB;
 use App\UserGaleria;
 use App\Cupom;
@@ -28,10 +30,11 @@ class EmpresaController extends Controller
 
     public function index_dashboard(){
 
+        // array para labels do chartjs
         $arr_meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul','Ago','Set','Out','Nov','Dez'];
         $dados_grafico = [];
         $ano = date('Y');        
-
+        $mes = date('m');
         $dados = DB::select(
             DB::raw(
                 'SELECT EXTRACT(MONTH FROM c.updated_at) as mes, COUNT(c.id) as qtd FROM cupons as c
@@ -48,6 +51,7 @@ class EmpresaController extends Controller
             $dados_grafico[] = 0;
         }
 
+        // gera os dados do grafico baseado no select da linha 37
         foreach($dados as $d){
             $dados_grafico[$d->mes-1] = $d->qtd;
         }
@@ -116,8 +120,14 @@ class EmpresaController extends Controller
                     ->where('validado',1)
                     ->where('p.user_id', Auth::user()->id)
                     ->count();
-                    
-        return view('admin.dashboard', compact('chartjs','chart','total','inicio','fim'));
+        
+        $quantidadeUsuarios = count(User::find(Auth::user()->id)->consumidores);
+
+        $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+        
+        $totalAniversariantes = count(User::whereIn('id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->get());
+
+        return view('admin.dashboard', compact('chartjs','chart','total','inicio','fim','quantidadeUsuarios','totalAniversariantes'));
     }
 
     public function index_dashboard_post(Request $r){
@@ -203,7 +213,7 @@ class EmpresaController extends Controller
                     ->where('validado',1)
                     ->count();
 
-                    
+        
         
         return view('admin.dashboard', compact('chartjs','chart','total','inicio','fim'));
     }

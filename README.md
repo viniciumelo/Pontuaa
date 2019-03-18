@@ -8,7 +8,9 @@
   
   php artisan key:generate
   
-  php artisan migrate --seed
+  #php artisan migrate --seed
+
+  rodar o Dump20190314 para gerar o BD
   
   php artisan serve
   
