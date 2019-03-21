@@ -34,8 +34,8 @@ Route::post('/cadastrar-empresa', 'SiteController@cadastrarEmpresa');
 Route::get('/teste', 'SiteController@sendPagSeguro');
 Route::get('/retorno', 'SiteController@retornoAssinatura');
 //Todo:: api para envio de mensagem
-Route::get('/aniversariantes', 'AniverController@index');
-Route::get('/aniversariantes-7', 'AniverController@sevenAgo');
+//Route::get('/aniversariantes', 'AniverController@index');
+//Route::get('/aniversariantes-7', 'AniverController@sevenAgo');
 
 Route::prefix('admin')->group(function(){
 
@@ -186,6 +186,8 @@ Route::prefix('empresa')->group(function(){
 
     Route::post('pontuar', 'EmpresaFidelidadeController@pontuar');
     Route::post('estornar', 'EmpresaFidelidadeController@estornar');
+
+    Route::resource('guia','GuiaController');
 });
 
 Route::prefix('api')->group(function(){
@@ -273,6 +275,7 @@ Route::post('definir-senha/{email}/{token}', 'EmpresaAuthController@definir_nova
 Route::get('validar/{email}/{token}', 'EmpresaAuthController@validar');
 
  // gera cupons   
+ /*
  Route::get('api/cupons/', 'CuponsController@apiCupons');
  Route::get('cupons/create_peso','CuponsController@createPeso')->name('cupons.pesos');
  Route::post('cupons/salvar_pesos/','CuponsController@salvarPeso')->name('cupons.salvar_pesos');   
@@ -283,4 +286,4 @@ Route::get('validar/{email}/{token}', 'EmpresaAuthController@validar');
  Route::post('cupons/salvar_pontos','CuponsController@salvarPontos')->name('cupons.salvar_pontos');
  Route::get('cupons/resgate_cupon/{cupon_id}','CuponsController@resgateCupon')->name('cupons.resgate_cupon');    
  Route::post('cupons/salva_resgate','CuponsController@storeResgate')->name('cupons.salva_resgate');
- 
+ */

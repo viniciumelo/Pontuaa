@@ -9,7 +9,7 @@ class Pontos extends Model
     protected $table = 'pontos';
     
     protected $fillable = [      
-        'user_id', 'loja_id', 'valor', 'pontos', 'created_at', 'updated_at', 'cupom_fiscal','pontos_config'
+        'consumidor_id', 'vendedor_id','guia_id', 'valor', 'pontos','cupom_fiscal','pontos_vendedor','pontos_guia','created_at', 'updated_at'
     ];
 
 
