@@ -65,7 +65,7 @@
                         <th class="c-table__cell c-table__cell--head sort">Pontos&nbsp;&nbsp;</th>
                         <th class="c-table__cell c-table__cell--head sort">Saldo atual&nbsp;&nbsp;</th>
                         <th class="c-table__cell c-table__cell--head sort">Prêmios&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head no-sort"style="width: 4%;">Ativo</th>
+                        <th class="c-table__cell c-table__cell--head no-sort"style="">Ativo</th>
                         
                         @if(!isset($niver))
                         <th class="c-table__cell c-table__cell--head no-sort">Opções</th>

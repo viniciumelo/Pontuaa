@@ -49,9 +49,9 @@ class EmpresaConsumidoresController extends Controller
 
     public function aniversariantes(){
 
-      $mes = date('m');
+    	$mes = date('m');
 
-      $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+    	$usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
         $lista = User::whereIn('id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->paginate(10);
 
         //$lista = EmpresaUsuario::where('empresa_id', Auth::user()->id)->with('usuario')->paginate(10);
@@ -125,10 +125,10 @@ class EmpresaConsumidoresController extends Controller
    //  public function insert(Request $r)
    //  {
    //      $validator = Validator::make(Input::all(), User::$rules, User::$messages);
-   //   if ($validator->fails()) {
-    //       $messages = $validator->messages();
+   //  	if ($validator->fails()) {
+	  //       $messages = $validator->messages();
    //          return $messages;
-   //      }else{     
+   //      }else{			
 
    //          $u = 
    //          User::create([
@@ -140,11 +140,11 @@ class EmpresaConsumidoresController extends Controller
    //              'contato' => $r->contato,
    //              'sexo' => $r->sexo,
    //              'nascimento' => $r->nascimento,
-   //              'tipo' => '1',   
+   //              'tipo' => '1',		
    //              'categorias' => ''
    //          ]);
 
-      // return $u;
+			// return $u;
    //      }
    //  }   
 }
