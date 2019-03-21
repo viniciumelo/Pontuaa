@@ -9,10 +9,9 @@
             <div class="col-12">
                 <form method="POST" action="{{route('conf.pontos')}}">
                     {{ csrf_field() }}
-        
                     <div class="row">
                         <div class="col c-field u-mb-small">
-                            <label class="c-field__label" for="pontos1">Pontos 1</label> 
+                            <label class="c-field__label" for="pontos1">Pontos 1</label>
                             <input class="c-input" required type="text" id="pontos1" name="pontos1"  @if(isset($conf->limite1->pontos)) value="{{ $conf->limite1->pontos }}" @endif>
                             <p style="color: crimson; font-size: 0.7em">Pontos ganhos até a quantia do valor da compra</p>
                         </div>
@@ -49,6 +48,20 @@
                             <label class="c-field__label" for="valor3">Valor da Compra 3</label> 
                             <input class="c-input" step=".01" type="number" id="valor3" name="valor3" required @if(isset($conf->limite3->reais)) value="{{ $conf->limite3->reais }}" @endif>
                             <p style="color: crimson; font-size: 0.7em">Ganhará x pontos até esse valor</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 c-field u-mb-small">
+                            <label class="c-field__label" for="pontos_vendedor">Pontos Vendedor</label> 
+                            <input class="c-input" required type="text" id="pontos_vendedor" name="pontos_vendedor" @if(isset($conf->vendedor->pontos)) value="{{ $conf->vendedor->pontos }}" @endif>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6 c-field u-mb-small">
+                            <label class="c-field__label" for="pontos_guia">Pontos Guia</label> 
+                            <input class="c-input" required type="text" id="pontos_guia" name="pontos_guia" @if(isset($conf->guia->pontos)) value="{{ $conf->guia->pontos }}" @endif>
                         </div>
                     </div>
         

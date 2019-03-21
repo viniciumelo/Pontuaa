@@ -18,7 +18,7 @@ class User extends Authenticatable
         'cidade', 'estado', 'lim_produtos', 'lim_img_produtos', 'lim_img_usuario','categorias', 'destaque', 'nota_qualidade',
         'facebook_id', 'sexo', 'nascimento', 'whatsapp', 'youtube', 'token', 'nota_atendimento', 'nota_ambiente',
         'nota', 'notificacao', 'tipo_valor', 'valor_cupom', 'qtd_assinaturas', 'titulo_cartao', 'regulamento', 'delivery', 'frete',
-        'tempo_entrega', 'plano', 'plano_expiracao', 'codigo_pagamento', 'numero_cartao','valor_ponto'
+        'tempo_entrega', 'plano', 'plano_expiracao', 'codigo_pagamento', 'numero_cartao','valor_ponto','empresa_id','vendedor'
     ];
 
     protected $hidden = [

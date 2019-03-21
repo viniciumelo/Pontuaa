@@ -19,28 +19,39 @@ use App\EmpresaUsuario;
 use App\User;
 use App\Pontos;
 use App\Premio;
+use App\Guia;
+use App\Consumidor;
 
 class EmpresaConsumidoresController extends Controller
 {
     public function index(){
-      $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
-      
-      $lista = User::whereIn('id', $usuarios_ids)->where('tipo',1)->paginate(10);
-      
-      foreach ($lista as $u) {
-        $u->saldo = Pontos::where('user_id', $u->id)->where('loja_id', Auth::user()->id)->sum('pontos.pontos');
-      }
+        /*$usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+        User::whereIn('id', $usuarios_ids)->where('tipo',1)->paginate(10);*/
+        $lista;
+        if(Auth::user()->empresa_id == 0 && Auth::user()->vendedor == 0){ //se n tiver id entao é a propria empresa
+            $lista = Consumidor::where('user_id',Auth::user()->id)->paginate(10);
+            
+        }
+        else{
+            $lista = Consumidor::where('user_id',Auth::user()->empresa_id)->paginate(10);
+            
+        }
+        foreach ($lista as $u) {
+            $u->saldo = Pontos::where('vendedor_id', $u->user_id)->sum('pontos.pontos');
+        }
+        $guias = Guia::where('empresa_id',Auth::user()->id)->get();
+        
 
-      $premios = Premio::orderBy('nome')->get();
-      //$lista = EmpresaUsuario::where('empresa_id', Auth::user()->id)->with('usuario')->paginate(10);
-      return view('empresa.usuarios.usuarios')->with('usuarios', $lista)->with('premios', $premios);
+        $premios = Premio::orderBy('nome')->get();
+        //$lista = EmpresaUsuario::where('empresa_id', Auth::user()->id)->with('usuario')->paginate(10);
+        return view('empresa.usuarios.usuarios')->with('usuarios', $lista)->with('premios', $premios)->with('guias',$guias);
     }
 
     public function aniversariantes(){
 
-    	$mes = date('m');
+      $mes = date('m');
 
-    	$usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+      $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
         $lista = User::whereIn('id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->paginate(10);
 
         //$lista = EmpresaUsuario::where('empresa_id', Auth::user()->id)->with('usuario')->paginate(10);
@@ -57,25 +68,32 @@ class EmpresaConsumidoresController extends Controller
     }
 
     public function create(){
-        return view('empresa.usuarios.usuario_edicao');
+        $guias = Guia::where('empresa_id',Auth::user()->id)->get();
+        return view('empresa.usuarios.usuario_edicao')->with('guias',$guias);
     }
 
     public function insert(Request $r){
-        $validator = Validator::make(Input::all(), User::$rules, User::$messages);
+        $validator = Validator::make(Input::all(), Consumidor::$rules, Consumidor::$messages);
         if ($validator->fails()) {            
             return Redirect::back()->withErrors($validator);
         }else{
-            $c = new User();
+            $c = new Consumidor();
             $c->fill($r->all());
-            $c->tipo = 1;
-            $c->password = bcrypt('!!!sem@senha!!!');
+            $c->guia_id = $r->guia_id;
+            if(Auth::user()->empresa_id == 0){ //se n tiver id entao é a propria empresa
+                $c->user_id = Auth::user()->id;
+            }
+            else{
+                $c->user_id = Auth::user()->empresa_id;
+            }
             //$c->remember_token = md5(uniqid(""));
+            // id do guia
             $c->save();
 
-            $ref = new EmpresaUsuario();
+            /*$ref = new EmpresaUsuario();
             $ref->user_id = $c->id;
             $ref->empresa_id = Auth::user()->id;
-            $ref->save();
+            $ref->save();*/
 
             Session::flash('message', 'Consumidor cadastrado com sucesso!');
             return redirect('/empresa/consumidores');
@@ -83,7 +101,8 @@ class EmpresaConsumidoresController extends Controller
     }  
 
     public function edit($id){
-        $c = User::find($id);
+        $c = Consumidor::find($id);
+        
         return view('empresa.usuarios.usuario_edicao')->with('usuario', $c);
     }
 
@@ -92,12 +111,10 @@ class EmpresaConsumidoresController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator);
         }else{
-            $u = User::find($id);            
-            $pass = $u->password;
+            $u = Consumidor::find($id);            
 
             $u->fill($r->all());
 
-            $u->password = $pass;
             $u->save(); 
 
             Session::flash('message', 'Os dados do consumidor foram alterados com sucesso!');
@@ -108,10 +125,10 @@ class EmpresaConsumidoresController extends Controller
    //  public function insert(Request $r)
    //  {
    //      $validator = Validator::make(Input::all(), User::$rules, User::$messages);
-   //  	if ($validator->fails()) {
-	  //       $messages = $validator->messages();
+   //   if ($validator->fails()) {
+    //       $messages = $validator->messages();
    //          return $messages;
-   //      }else{			
+   //      }else{     
 
    //          $u = 
    //          User::create([
@@ -123,11 +140,11 @@ class EmpresaConsumidoresController extends Controller
    //              'contato' => $r->contato,
    //              'sexo' => $r->sexo,
    //              'nascimento' => $r->nascimento,
-   //              'tipo' => '1',		
+   //              'tipo' => '1',   
    //              'categorias' => ''
    //          ]);
 
-			// return $u;
+      // return $u;
    //      }
    //  }   
 }

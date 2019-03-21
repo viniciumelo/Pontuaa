@@ -116,7 +116,7 @@
                         </a>
                     </li>
                     <li class="c-sidebar__item">
-                        <a class="c-sidebar__link" href="/empresa/consumidores">
+                        <a class="c-sidebar__link" href="{{route('guia.index')}}">
                             <i class="fa fa-users u-mr-xsmall"></i>Guias
                         </a>
                     </li>

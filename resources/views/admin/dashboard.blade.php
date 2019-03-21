@@ -29,7 +29,7 @@
                     <i class="fa fa-user"></i>
                   </div>
                   <p class="card-category">Clientes cadastrados</p>
-                  <h3 class="card-title">{{$quantidadeUsuarios}}</h3>
+                  <h3 class="card-title">@if(isset($quantidadeUsuarios)){{$quantidadeUsuarios}}@else 0 @endif</h3>
                 </div> 
               </div>
               </a>
@@ -42,7 +42,7 @@
                     <i class="fa fa-info"></i>
                   </div>
                   <p class="card-category">Aniversariantes do Mês</p>
-                <h3 class="card-title">{{$totalAniversariantes}}</h3>
+                <h3 class="card-title">@if(isset($totalAniversariantes)){{$totalAniversariantes}}@else 0 @endif</h3>
                   
                 </div>
               </div>
