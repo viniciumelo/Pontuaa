@@ -28,22 +28,28 @@
                     action="{{route('guia.update',$usuario->id)}}"
                 @endif
             >
-                {{ csrf_field() }}
                 @if(isset($usuario)) 
-                    @method('PUT')
+                    <input type="hidden" name="_method" value="put">
                 @endif
+                {{ csrf_field() }}
                 <div class="row">
 
                     <div class="col-md-4 c-field u-mb-small">
                         <label class="c-field__label" for="nome">Nome</label> 
                         <input class="c-input" type="text" id="nome" name="nome" required
                         @if(isset($usuario)) value="{{ $usuario->nome }}" @endif> 
-                    </div>     
+                    </div>   
+                    
+                    <div class="col-md-4 c-field u-mb-small">
+                        <label class="c-field__label" for="email">Email</label> 
+                        <input class="c-input" type="email" id="email" name="email"
+                        @if(isset($usuario)) value="{{ $usuario->email }}" @endif> 
+                    </div> 
 
                     <div class="col-md-4 c-field u-mb-small">
                         <label class="c-field__label" for="endereco">Endereço</label> 
-                        <input class="c-input" type="text" id="nome" name="nome"
-                        @if(isset($usuario)) value="{{ $usuario->nome }}" @endif> 
+                        <input class="c-input" type="text" id="endereco" name="endereco"
+                        @if(isset($usuario)) value="{{ $usuario->endereco }}" @endif> 
                     </div>                
 
                     <div class="col-md-4 c-field u-mb-small">

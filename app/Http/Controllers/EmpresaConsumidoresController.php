@@ -37,7 +37,8 @@ class EmpresaConsumidoresController extends Controller
             
         }
         foreach ($lista as $u) {
-            $u->saldo = Pontos::where('vendedor_id', $u->user_id)->sum('pontos.pontos');
+            //$u->saldo = Pontos::where('vendedor_id', $u->user_id)->sum('pontos.pontos');
+            $u->saldo = Pontos::where('consumidor_id', $u->id)->sum('pontos.pontos');
         }
         $guias = Guia::where('empresa_id',Auth::user()->id)->get();
         
@@ -102,8 +103,8 @@ class EmpresaConsumidoresController extends Controller
 
     public function edit($id){
         $c = Consumidor::find($id);
-        
-        return view('empresa.usuarios.usuario_edicao')->with('usuario', $c);
+        $guias = Guia::where('empresa_id',Auth::user()->id)->get();
+        return view('empresa.usuarios.usuario_edicao')->with('usuario', $c)->with('guias',$guias);
     }
 
     public function update(Request $r, $id){

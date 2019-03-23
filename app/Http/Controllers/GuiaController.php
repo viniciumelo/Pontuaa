@@ -23,10 +23,17 @@ class GuiaController extends Controller
     {
         $guia = 0;
         if(Auth::user()->vendedor){
-            $guias = Guia::where('empresa_id', Auth::user()->id)->get();
+            $guias = Guia::where('empresa_id', Auth::user()->empresa_id)->get();
+            
         }
         else{
-            $guias = Guia::where('empresa_id', Auth::user()->empresa_id)->get();
+            $guias = Guia::where('empresa_id', Auth::user()->id)->get();
+            foreach($guias as $guia){
+                $guia->pontos = 
+                    Pontos::where('guia_id',$guia->id)->sum('pontos.pontos');
+                
+            }
+            
         }
             
         $premios = Premio::orderBy('nome')->get();
@@ -66,7 +73,19 @@ class GuiaController extends Controller
      */
     public function show($id)
     {
-        //
+        $guia = Guia::find($id);
+        
+        if(Auth::user()->empresa_id){ // se for vendedor entao vai ter empresa_id
+            
+            if(Auth::user()->empresa_id == $guia->empresa_id){
+                return view('empresa.guias.guias_edicao')->with('usuario', $guia);
+            }
+        }
+        elseif(Auth::user()->id === $guia->empresa_id){
+            
+            return view('empresa.guias.guias_edicao')->with('usuario', $guia);
+        }
+        return abort(404);
     }
 
     /**
@@ -89,7 +108,22 @@ class GuiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $guia = Guia::find($id);
+        
+        if(Auth::user()->empresa_id){ // se for vendedor entao vai ter empresa_id
+            if(Auth::user()->empresa_id == $guia->empresa_id){
+                $guia->fill($request->all())->save();
+                return redirect()->route('guia.index');
+            }
+        }
+        elseif(Auth::user()->id === $guia->empresa_id){
+            $guia->fill($request->all())->save();
+            return redirect()->route('guia.index');
+        }
+        return abort(404);
+
+        return redirect()->route('guia.index');
     }
 
     /**
@@ -100,6 +134,7 @@ class GuiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Guia::findOrFail($id)->delete();
+        return redirect()->route('guia.index');
     }
 }

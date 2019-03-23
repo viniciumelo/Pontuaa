@@ -55,8 +55,8 @@
                     <tr class="c-table__row">                        
                         <th class="c-table__cell c-table__cell--head"style="width: 7%;">Nome</th>
                         <th class="c-table__cell c-table__cell--head sort">Pontos&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head sort">Prêmios&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head no-sort"style="width: 4%;">Ativo</th>
+                        <th class="c-table__cell c-table__cell--head sort">Membro desde&nbsp;&nbsp;</th>
+                        <th class="c-table__cell c-table__cell--head no-sort"style="width: 4%;">Dados atualizados</th>
                     </tr>
                 </thead>
 
@@ -71,16 +71,14 @@
                     @endif
 
                     @foreach($usuarios as $u)
+                    
                     <tr class="c-table__row ">                        
                         <td class="c-table__cell">{{ $u->nome }}</td>
-                        <td class="c-table__cell">{{ $u->nome }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
+                        <td class="c-table__cell">{{ $u->pontos }}</td>
+                        <td class="c-table__cell">{{ $u->created_at }}</td>
                         <td class="c-table__cell text-truncate">{{ $u->created_at }}</td>
                         
                         <td class="c-table__cell text-truncate">{{ $u->updated_at }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
                         <td class="c-table__cell">
                             
                             @if($u->ativo == 1)
@@ -104,15 +102,14 @@
                               <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções</button>
 
                               <div class="c-dropdown__menu dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="c-dropdown__item dropdown-item" href="/empresa/consumidor/editar/{{ $u->id }}">Editar</a>
+                                  <a class="c-dropdown__item dropdown-item" href="{{ route('guia.show',$u->id) }}">Editar</a>
 
-                                  <a id="btn-pontuar-{{ $u->id }}" data-nome="{{ $u->name }}" 
-                                    onclick="pontuar('{{ $u->id }}')" class="c-dropdown__item dropdown-item" 
-                                    href="#" >Pontuar</a>
+                                    <form action="{{route('guia.destroy',$u->id)}}" method="post" style="width: 100%;">
+                                        <input type="hidden" name="_method" value="delete">
+                                        {{csrf_field()}}
+                                        <button type="submit" class="c-dropdown__item dropdown-item" style="width:95%;">Excluir</button>
+                                    </form>
 
-                                  <a class="c-dropdown__item dropdown-item" id="btn-estorno-{{ $u->id }}" data-nome="{{ $u->name }}" 
-                                    onclick="estornar('{{ $u->id }}')" href="#">Estornar Pontos</a>
-                                    <a data-nome="{{ $u->name }}" id="btn-resgate-{{ $u->id }}" class="c-dropdown__item dropdown-item" onclick="resgatar('{{ $u->id }}')" href="#">Resgatar Prêmio</a>
                               </div>
                           </div>
                         </td>            
