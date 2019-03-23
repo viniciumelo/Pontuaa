@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Guia extends Model
 {
-    public $timestamps = false;
     protected $fillable = [
-        'empresa_id', 'nome', 'endereco','cpf','banco','agencia','conta'
+        'empresa_id', 'nome', 'endereco','cpf','banco','agencia','conta','email','created_at','updated_at'
     ];
 }

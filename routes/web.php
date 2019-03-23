@@ -187,7 +187,13 @@ Route::prefix('empresa')->group(function(){
     Route::post('pontuar', 'EmpresaFidelidadeController@pontuar');
     Route::post('estornar', 'EmpresaFidelidadeController@estornar');
 
-    Route::resource('guia','GuiaController');
+    Route::get('guia', 'GuiaController@index')->name('guia.index')->middleware('empresa');
+    Route::get('guia/pesquisa', 'GuiaController@buscar')->middleware('empresa');
+    Route::get('guia/cadastrar', 'GuiaController@create')->name('guia.create')->middleware('empresa');
+    Route::post('guia/cadastrar', 'GuiaController@store')->name('guia.store')->middleware('empresa');
+    Route::get('guia/{id}', 'GuiaController@show')->name('guia.show')->middleware('empresa');
+    Route::put('guia/atualizar/{id}', 'GuiaController@update')->name('guia.update')->middleware('empresa');
+    Route::delete('guia/{id}','GuiaController@destroy')->name('guia.destroy')->middleware('empresa');;
 });
 
 Route::prefix('api')->group(function(){

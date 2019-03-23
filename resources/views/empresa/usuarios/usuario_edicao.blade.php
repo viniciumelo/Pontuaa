@@ -32,7 +32,8 @@
                 <div class="row">
                     <div class="col-6 c-field u-mb-small">
                         <label class="c-field__label" for="name">Nome</label> 
-                        <select class="c-select" id="select2" name="guia_id">
+                        <select class="c-select" name="guia_id">
+                            <option value="">Selecione um guia</option>
                             @foreach($guias as $guia)
                                 <option value="{{$guia->id}}" @if(isset($usuario) && $guia->id == $usuario->guia_id) selected @endif>{{$guia->nome}}</option>
                             @endforeach
