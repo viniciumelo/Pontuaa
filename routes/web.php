@@ -34,8 +34,8 @@ Route::post('/cadastrar-empresa', 'SiteController@cadastrarEmpresa');
 Route::get('/teste', 'SiteController@sendPagSeguro');
 Route::get('/retorno', 'SiteController@retornoAssinatura');
 //Todo:: api para envio de mensagem
-Route::get('/aniversariantes', 'AniverController@index');
-Route::get('/aniversariantes-7', 'AniverController@sevenAgo');
+//Route::get('/aniversariantes', 'AniverController@index');
+//Route::get('/aniversariantes-7', 'AniverController@sevenAgo');
 
 Route::prefix('admin')->group(function(){
 
@@ -180,8 +180,20 @@ Route::prefix('empresa')->group(function(){
     Route::post('pedido/editar/{id}', 'PedidoController@update');
     Route::get('pedido/detalhes/{id}', 'PedidoController@detalhes');
 
+    // pontos
+    Route::get('pontos', 'EmpresaFidelidadeController@configurarPontos');
+    Route::post('pontos', 'EmpresaFidelidadeController@storeConfiguracaoPontos')->name("conf.pontos");
+
     Route::post('pontuar', 'EmpresaFidelidadeController@pontuar');
     Route::post('estornar', 'EmpresaFidelidadeController@estornar');
+
+    Route::get('guia', 'GuiaController@index')->name('guia.index')->middleware('empresa');
+    Route::get('guia/pesquisa', 'GuiaController@buscar')->middleware('empresa');
+    Route::get('guia/cadastrar', 'GuiaController@create')->name('guia.create')->middleware('empresa');
+    Route::post('guia/cadastrar', 'GuiaController@store')->name('guia.store')->middleware('empresa');
+    Route::get('guia/{id}', 'GuiaController@show')->name('guia.show')->middleware('empresa');
+    Route::put('guia/atualizar/{id}', 'GuiaController@update')->name('guia.update')->middleware('empresa');
+    Route::delete('guia/{id}','GuiaController@destroy')->name('guia.destroy')->middleware('empresa');;
 });
 
 Route::prefix('api')->group(function(){
@@ -269,6 +281,7 @@ Route::post('definir-senha/{email}/{token}', 'EmpresaAuthController@definir_nova
 Route::get('validar/{email}/{token}', 'EmpresaAuthController@validar');
 
  // gera cupons   
+ /*
  Route::get('api/cupons/', 'CuponsController@apiCupons');
  Route::get('cupons/create_peso','CuponsController@createPeso')->name('cupons.pesos');
  Route::post('cupons/salvar_pesos/','CuponsController@salvarPeso')->name('cupons.salvar_pesos');   
@@ -279,4 +292,4 @@ Route::get('validar/{email}/{token}', 'EmpresaAuthController@validar');
  Route::post('cupons/salvar_pontos','CuponsController@salvarPontos')->name('cupons.salvar_pontos');
  Route::get('cupons/resgate_cupon/{cupon_id}','CuponsController@resgateCupon')->name('cupons.resgate_cupon');    
  Route::post('cupons/salva_resgate','CuponsController@storeResgate')->name('cupons.salva_resgate');
- 
+ */

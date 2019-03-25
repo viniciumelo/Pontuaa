@@ -20,30 +20,33 @@
                 
               </div>
             </div>
+            
             <div class="col-lg-3 col-md-6 col-sm-6">
+              <a href="../empresa/consumidores">
               <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">
                     <i class="fa fa-user"></i>
                   </div>
                   <p class="card-category">Clientes cadastrados</p>
-                  <h3 class="card-title">0</h3>
-                </div>
-                
+                  <h3 class="card-title">@if(isset($quantidadeUsuarios)){{$quantidadeUsuarios}}@else 0 @endif</h3>
+                </div> 
               </div>
+              </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
+              <a href="../empresa/aniversariantes">
               <div class="card card-stats">
                 <div class="card-header card-header-danger card-header-icon">
                   <div class="card-icon">
                     <i class="fa fa-info"></i>
                   </div>
-                  <p class="card-category">Taxa de retorno por período</p>
-                  <h3 class="card-title">0 <small>%</small></h3>
+                  <p class="card-category">Aniversariantes do Mês</p>
+                <h3 class="card-title">@if(isset($totalAniversariantes)){{$totalAniversariantes}}@else 0 @endif</h3>
                   
                 </div>
-                
               </div>
+              </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
               <div class="card card-stats">

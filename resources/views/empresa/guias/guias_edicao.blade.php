@@ -23,43 +23,34 @@
         <div class="col-md-12">
             <form class="c-search-form c-search-form--dark" method="POST" 
                 @if(!isset($usuario)) 
-                    action="/empresa/consumidor/cadastrar"
+                    action="{{route('guia.store')}}"
                 @else
-                    action="/empresa/consumidor/editar/{{ $usuario->id }}"
+                    action="{{route('guia.update',$usuario->id)}}"
                 @endif
             >
+                @if(isset($usuario)) 
+                    <input type="hidden" name="_method" value="put">
+                @endif
                 {{ csrf_field() }}
                 <div class="row">
-                    <div class="col-6 c-field u-mb-small">
-                        <label class="c-field__label" for="name">Nome</label> 
-                        <select class="c-select" name="guia_id">
-                            <option value="">Selecione um guia</option>
-                            @foreach($guias as $guia)
-                                <option value="{{$guia->id}}" @if(isset($usuario) && $guia->id == $usuario->guia_id) selected @endif>{{$guia->nome}}</option>
-                            @endforeach
-                        </select>
-                    </div>   
-                </div>
-                <div class="row">
-                    
 
                     <div class="col-md-4 c-field u-mb-small">
                         <label class="c-field__label" for="nome">Nome</label> 
                         <input class="c-input" type="text" id="nome" name="nome" required
                         @if(isset($usuario)) value="{{ $usuario->nome }}" @endif> 
-                    </div>     
-
-                    <div class="col-md-4 c-field u-mb-small">
-                        <label class="c-field__label" for="sobrenome">Sobrenome</label> 
-                        <input class="c-input" type="text" id="sobrenome" name="sobrenome"
-                        @if(isset($usuario)) value="{{ $usuario->sobrenome }}" @endif> 
-                    </div>                
+                    </div>   
                     
                     <div class="col-md-4 c-field u-mb-small">
-                        <label class="c-field__label" for="email">E-mail</label> 
-                        <input class="c-input" type="email" id="email" name="email" required
-                        @if(isset($usuario)) value="{{ $usuario->email }}" @endif>  
-                    </div>
+                        <label class="c-field__label" for="email">Email</label> 
+                        <input class="c-input" type="email" id="email" name="email"
+                        @if(isset($usuario)) value="{{ $usuario->email }}" @endif> 
+                    </div> 
+
+                    <div class="col-md-4 c-field u-mb-small">
+                        <label class="c-field__label" for="endereco">Endereço</label> 
+                        <input class="c-input" type="text" id="endereco" name="endereco"
+                        @if(isset($usuario)) value="{{ $usuario->endereco }}" @endif> 
+                    </div>                
 
                     <div class="col-md-4 c-field u-mb-small">
                         <label class="c-field__label" for="cpf">CPF</label> 
@@ -68,43 +59,35 @@
                     </div>
                     
                     <div class="col-md-4 c-field u-mb-small">
-                        <label class="c-field__label" for="contato">Contato</label> 
-                        <input class="c-input" type="text" id="contato" name="contato"
-                        @if(isset($usuario)) value="{{ $usuario->contato }}" @endif> 
+                        <label class="c-field__label" for="banco">Banco</label> 
+                        <input class="c-input" type="text" id="banco" name="banco"
+                        @if(isset($usuario)) value="{{ $usuario->banco }}" @endif> 
                     </div>
 
                     <div class="col-md-4 c-field u-mb-small">
-                        <label class="c-field__label" for="nascimento">Nascimento</label> 
-                        <input class="c-input" type="date" id="nascimento" name="nascimento"
-                        @if(isset($usuario)) value="{{ $usuario->nascimento }}" @endif> 
+                        <label class="c-field__label" for="agencia">Agência</label> 
+                        <input class="c-input" type="text" id="agencia" name="agencia"
+                        @if(isset($usuario)) value="{{ $usuario->agencia }}" @endif> 
                     </div>
 
                     <div class="col-md-4 c-field u-mb-small">
-                    <div class="c-field u-mb-small">
-                        <label class="c-field__label" for="select2">Sexo</label>
-
-                        <!-- Select2 jquery plugin is used -->
-                        <select class="c-select" id="select2" name="sexo">
-                            <option value="M" @if(isset($usuario) && $usuario->sexo == 'M') selected @endif>Masculino</option>
-                            <option value="F" @if(isset($usuario) && $usuario->sexo == 'F') selected @endif>Feminino</option>                            
-                        </select>
+                        <label class="c-field__label" for="conta">Conta</label> 
+                        <input class="c-input" type="text" id="conta" name="conta"
+                        @if(isset($usuario)) value="{{ $usuario->conta }}" @endif> 
                     </div>
-                    </div>
-                    
+                <!--                    
                     <div class="col-md-4 c-field u-mb-small">
                     <div class="c-field u-mb-medium">
                         <label class="c-field__label" for="select1">Ativo</label>
 
-                        <!-- Select2 jquery plugin is used -->
+                         Select2 jquery plugin is used 
                         <select class="c-select" id="select1" name="ativo">
                             <option value="1" @if(isset($usuario) && $usuario->ativo == 1) selected @endif>Sim</option>
                             <option value="0" @if(isset($usuario) && $usuario->ativo == 0) selected @endif>Não</option>                            
                         </select>
                     </div>
                     </div>
-
-                    
-                    
+                -->                  
                 </div>               
                 <button class="c-btn c-btn--info" type="submit">Salvar</button>                    
 

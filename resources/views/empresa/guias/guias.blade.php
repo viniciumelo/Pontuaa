@@ -4,11 +4,8 @@
 @endphp
 @extends('layouts.app')
 
-@if(isset($niver))
-    @section('title', 'Aniversariantes')
-@else
-    @section('title', 'Consumidores')
-@endif
+@section('title', 'Guias')
+
 
 @section('content')
 <div class="container-fluid">
@@ -26,7 +23,6 @@
         <button class="c-close" data-dismiss="alert" type="button">×</button>
     </div>    
     @endif
-    <a href="../empresa/pontos">Configurar Pontos</a>
     <div class="row u-mb-large">
         <div class="col-12">
             <table class="c-table" id="datatable">
@@ -35,11 +31,11 @@
                 @if(isset($niver))
                     Aniversariantes
                 @else
-                    Consumidores
+                    Guias
                 @endif
 
                 @if(!isset($niver))
-                    <a class="c-btn c-btn--info pull-right" href="/empresa/consumidor/cadastrar">
+                    <a class="c-btn c-btn--info pull-right" href="{{route('guia.create')}}">
                         <i class="fa fa-plus u-mr-xsmall"></i>Adicionar
                     </a>
                     
@@ -57,19 +53,10 @@
 
                 <thead class="c-table__head c-table__head--slim">
                     <tr class="c-table__row">                        
-                        <th class="c-table__cell c-table__cell--head sort" style="width: 9%;">Ranking</th>
                         <th class="c-table__cell c-table__cell--head"style="width: 7%;">Nome</th>
-                        <th class="c-table__cell c-table__cell--head sort">Presenças&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head sort"style="width: 3%;">Cliente desde</th>
-                        <th class="c-table__cell c-table__cell--head sort"style="width: 3%;">Última visita</th>
                         <th class="c-table__cell c-table__cell--head sort">Pontos&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head sort">Saldo atual&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head sort">Prêmios&nbsp;&nbsp;</th>
-                        <th class="c-table__cell c-table__cell--head no-sort"style="">Ativo</th>
-                        
-                        @if(!isset($niver))
-                        <th class="c-table__cell c-table__cell--head no-sort">Opções</th>
-                        @endif
+                        <th class="c-table__cell c-table__cell--head sort">Membro desde&nbsp;&nbsp;</th>
+                        <th class="c-table__cell c-table__cell--head no-sort"style="width: 4%;">Dados atualizados</th>
                     </tr>
                 </thead>
 
@@ -84,16 +71,14 @@
                     @endif
 
                     @foreach($usuarios as $u)
+                    
                     <tr class="c-table__row ">                        
-                        <td class="c-table__cell">{{ $u->nota }}</td>
                         <td class="c-table__cell">{{ $u->nome }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
+                        <td class="c-table__cell">{{ $u->pontos }}</td>
+                        <td class="c-table__cell">{{ $u->created_at }}</td>
                         <td class="c-table__cell text-truncate">{{ $u->created_at }}</td>
                         
                         <td class="c-table__cell text-truncate">{{ $u->updated_at }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
-                        <td class="c-table__cell">{{ $u->saldo }}</td>
                         <td class="c-table__cell">
                             
                             @if($u->ativo == 1)
@@ -117,15 +102,14 @@
                               <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opções</button>
 
                               <div class="c-dropdown__menu dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="c-dropdown__item dropdown-item" href="/empresa/consumidor/editar/{{ $u->id }}">Editar</a>
+                                  <a class="c-dropdown__item dropdown-item" href="{{ route('guia.show',$u->id) }}">Editar</a>
 
-                                  <a id="btn-pontuar-{{ $u->id }}" data-nome="{{ $u->name }}" 
-                                    onclick="pontuar('{{ $u->id }}')" class="c-dropdown__item dropdown-item" 
-                                    href="#" >Pontuar</a>
+                                    <form action="{{route('guia.destroy',$u->id)}}" method="post" style="width: 100%;">
+                                        <input type="hidden" name="_method" value="delete">
+                                        {{csrf_field()}}
+                                        <button type="submit" class="c-dropdown__item dropdown-item" style="width:95%;">Excluir</button>
+                                    </form>
 
-                                  <a class="c-dropdown__item dropdown-item" id="btn-estorno-{{ $u->id }}" data-nome="{{ $u->name }}" 
-                                    onclick="estornar('{{ $u->id }}')" href="#">Estornar Pontos</a>
-                                    <a data-nome="{{ $u->name }}" id="btn-resgate-{{ $u->id }}" class="c-dropdown__item dropdown-item" onclick="resgatar('{{ $u->id }}')" href="#">Resgatar Prêmio</a>
                               </div>
                           </div>
                         </td>            
@@ -136,7 +120,7 @@
                 </tbody>
             </table>
             <div style="margin-top:10px; display: flex; justify-content: center;">
-            {{ $usuarios->links('pagination.pagination') }}
+            
             </div>
         </div>
     </div> 
@@ -166,12 +150,6 @@
                         <div class="col-md-12 c-field u-mb-small">
                             <label class="c-field__label" for="valor">Valor da Compra</label> 
                             <input class="c-input" step=".01" type="number" id="valor" name="valor" required> 
-                        </div>
-
-                        
-                        <div class="col-md-12 c-field u-mb-small">
-                            <label class="c-field__label" for="cupom_fiscal">Cupom fiscal</label> 
-                            <input class="c-input" step=".01" type="text" id="cupom_fiscal" name="cupom_fiscal" required> 
                         </div>
 
                     </div>
