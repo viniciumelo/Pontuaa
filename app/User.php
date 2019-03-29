@@ -54,4 +54,8 @@ class User extends Authenticatable
     }
 
     protected $table = 'users';
+
+    public function consumidoresLista() {
+        return $this->hasMany(\App\Consumidor::class);
+    }
 }

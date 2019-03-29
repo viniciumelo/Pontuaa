@@ -12,5 +12,13 @@ class Pontos extends Model
         'consumidor_id', 'vendedor_id','guia_id', 'valor', 'pontos','cupom_fiscal','pontos_vendedor','pontos_guia','created_at', 'updated_at'
     ];
 
+    public function consumidor()
+    {
+        return $this->belongsTo(\App\Consumidor::class);
+    }
 
+    public function guia()
+    {
+        return $this->belongsTo(\App\Guia::class);
+    }
 }
