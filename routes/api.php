@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/aniversario', 'ApiController@mensagemAniversario');
 Route::get('/aniversario_dia', 'ApiController@mensagemAniversarioDia');
+
+Route::post('/transactions', 'API\\TransactionController@store')->name('transactions.store');
