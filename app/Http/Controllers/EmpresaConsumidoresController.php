@@ -49,11 +49,18 @@ class EmpresaConsumidoresController extends Controller
     }
 
     public function aniversariantes(){
-
+      $empresa_id = 0;
+      if (Auth::user()->empresa_id > 0){
+          $empresa_id = Auth::user()->empresa_id; // se for funcionario o ID é o id do dono
+      }
+      else{
+          $empresa_id = Auth::user()->id; // se for dono da loja ID é 0
+      }
     	$mes = date('m');
 
-    	$usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
-        $lista = User::whereIn('id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->paginate(10);
+    	//$usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+      
+      $lista = Consumidor::where('user_id', $empresa_id)->where('ativo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->paginate(10);
 
         //$lista = EmpresaUsuario::where('empresa_id', Auth::user()->id)->with('usuario')->paginate(10);
         return view('empresa.usuarios.usuarios')->with('usuarios', $lista)->with('niver', '1');

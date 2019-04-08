@@ -227,7 +227,6 @@
                         </span>
                         <span class="c-notification__number">3</span>
                     </a>
-
                     <div class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuUser">
                         <a href="#" class="c-dropdown__item dropdown-item o-media">
                             <span class="o-media__img u-mr-xsmall">
@@ -272,7 +271,6 @@
                         </span>
                         <span class="c-notification__number">3</span>
                     </a>
-
                     <div class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuAlerts">
                         <a href="#" class="c-dropdown__item dropdown-item o-media">
                             <span class="o-media__img u-mr-xsmall">
@@ -288,7 +286,6 @@
                                 <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
                             </div>
                         </a>
-
                         <a href="#" class="c-dropdown__item dropdown-item o-media">
                             <span class="o-media__img u-mr-xsmall">
                                 <span class="c-avatar c-avatar--xsmall">

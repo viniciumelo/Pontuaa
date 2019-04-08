@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Guia;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 use DateTime;
 use Redirect;
 use Auth;
@@ -134,6 +135,12 @@ class GuiaController extends Controller
      */
     public function destroy($id)
     {
+        try{
+            Guia::findOrFail($id)->delete();
+        }
+        catch (QueryException $ex){
+            return redirect()->route('guia.index');
+        }
         Guia::findOrFail($id)->delete();
         return redirect()->route('guia.index');
     }

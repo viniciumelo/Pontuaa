@@ -12,6 +12,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Response;
 
 use App\User;
+use App\Consumidor;
 use App\Pontos;
 use App\EmpresaUsuario;
 use DB;
@@ -121,6 +122,24 @@ class EmpresaController extends Controller
                     ->where('p.user_id', Auth::user()->id)
                     ->count();
         
+
+        $quantidadeUsuarios = 0;
+        $empresa_id = 0;
+        if (Auth::user()->empresa_id > 0){
+            $empresa_id = Auth::user()->empresa_id;
+        }
+        else{
+            $empresa_id = Auth::user()->id;
+        }
+
+        $quantidadeUsuarios = count(User::find($empresa_id)->consumidores);
+
+        $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+        
+        //$totalAniversariantes = count(User::whereIn('user_id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->get());
+
+        $totalAniversariantes = count(Consumidor::where('user_id', $empresa_id)->where('ativo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->get());        
+
         $quantidadeUsuarios = count(User::find(Auth::user()->id)->consumidores);
 
         $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
