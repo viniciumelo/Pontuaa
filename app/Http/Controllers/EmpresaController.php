@@ -122,6 +122,7 @@ class EmpresaController extends Controller
                     ->where('p.user_id', Auth::user()->id)
                     ->count();
         
+
         $quantidadeUsuarios = 0;
         $empresa_id = 0;
         if (Auth::user()->empresa_id > 0){
@@ -138,6 +139,12 @@ class EmpresaController extends Controller
         //$totalAniversariantes = count(User::whereIn('user_id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->get());
 
         $totalAniversariantes = count(Consumidor::where('user_id', $empresa_id)->where('ativo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->get());        
+
+        $quantidadeUsuarios = count(User::find(Auth::user()->id)->consumidores);
+
+        $usuarios_ids = EmpresaUsuario::where('empresa_id', Auth::user()->id)->pluck('user_id');
+        
+        $totalAniversariantes = count(User::whereIn('id', $usuarios_ids)->where('tipo',1)->whereNotNull('nascimento')->whereMonth('nascimento',$mes)->get());
 
         return view('admin.dashboard', compact('chartjs','chart','total','inicio','fim','quantidadeUsuarios','totalAniversariantes'));
     }

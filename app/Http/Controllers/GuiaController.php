@@ -141,5 +141,7 @@ class GuiaController extends Controller
         catch (QueryException $ex){
             return redirect()->route('guia.index');
         }
+        Guia::findOrFail($id)->delete();
+        return redirect()->route('guia.index');
     }
 }

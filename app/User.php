@@ -18,7 +18,7 @@ class User extends Authenticatable
         'cidade', 'estado', 'lim_produtos', 'lim_img_produtos', 'lim_img_usuario','categorias', 'destaque', 'nota_qualidade',
         'facebook_id', 'sexo', 'nascimento', 'whatsapp', 'youtube', 'token', 'nota_atendimento', 'nota_ambiente',
         'nota', 'notificacao', 'tipo_valor', 'valor_cupom', 'qtd_assinaturas', 'titulo_cartao', 'regulamento', 'delivery', 'frete',
-        'tempo_entrega', 'plano', 'plano_expiracao', 'codigo_pagamento', 'numero_cartao','valor_ponto','empresa_id','vendedor'
+        'tempo_entrega', 'plano', 'plano_expiracao', 'codigo_pagamento', 'numero_cartao','valor_ponto','empresa_id','vendedor','pontos_config'
     ];
 
     protected $hidden = [
@@ -52,7 +52,13 @@ class User extends Authenticatable
         // a chave estrangeira da tabela empresas_usuarios é user_id entao pra encontrar quantos consumidores são temos buscar por empresa_id
         //return $this->hasMany('App\EmpresaUsuario','empresa_id');
         return $this->hasMany('App\Consumidor','user_id');
+
+        return $this->hasMany('App\EmpresaUsuario','empresa_id');
     }
 
     protected $table = 'users';
+
+    public function consumidoresLista() {
+        return $this->hasMany(\App\Consumidor::class);
+    }
 }
